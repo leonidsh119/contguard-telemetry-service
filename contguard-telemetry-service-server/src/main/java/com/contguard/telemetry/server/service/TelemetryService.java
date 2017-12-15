@@ -30,14 +30,17 @@ public class TelemetryService implements ITelemetryService {
     @Override
     @Transactional
     public AddTelemetryResponse add(AddTelemetryRequest request) {
+        _logger.debug("Adding new telemetry.");
         TelemetryDto telemetryDto = toDto(request.getTelemetry());
         _telemetryDal.save(telemetryDto);
+        _logger.debug("Done adding new telemetry.");
         return new AddTelemetryResponse(telemetryDto.getId());
     }
 
     @Override
     @Transactional
     public MatchVesselResponse match(MatchVesselRequest request) {
+        _logger.debug("Matching vessel {}.", request.getVessel().getVesselMmsi());
         Vessel vessel = request.getVessel();
         LocalDateTime start = vessel.getTime().minusMinutes(_matchRangeMinutes);
         LocalDateTime end = vessel.getTime().plusMinutes(_matchRangeMinutes);

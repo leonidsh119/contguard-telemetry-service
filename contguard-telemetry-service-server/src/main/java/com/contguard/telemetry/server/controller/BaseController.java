@@ -15,7 +15,8 @@ import java.nio.file.AccessDeniedException;
 @Controller
 @ControllerAdvice
 public class BaseController {
-    private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
+    private final Logger _logger = LoggerFactory.getLogger(getClass());
+
 
     public BaseController() {
     }
@@ -23,14 +24,14 @@ public class BaseController {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         BaseException baseException = BaseException.parseException(e);
-        LOG.error("Exception caught on base controller", baseException);
+        _logger.error("Exception caught on base controller", baseException);
         return new ResponseEntity(baseException.getErrorResponse(), baseException.getHttpStatusCode());
     }
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(Exception e) {
         ErrorResponse errorResponse = new ErrorResponse("ACCESS_DENIED", e.getMessage());
-        LOG.error("Exception caught on base controller", e);
+        _logger.error("Exception caught on base controller", e);
         return new ResponseEntity(errorResponse, HttpStatus.FORBIDDEN);
     }
 }

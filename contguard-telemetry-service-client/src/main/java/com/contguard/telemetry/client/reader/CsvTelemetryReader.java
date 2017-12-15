@@ -2,20 +2,26 @@ package com.contguard.telemetry.client.reader;
 
 import com.contguard.telemetry.client.reader.api.ITelemetryReader;
 import com.contguard.telemetry.contract.Telemetry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.LinkedList;
 
 public class CsvTelemetryReader extends CsvReaderBase implements ITelemetryReader {
+    private final Logger _logger = LoggerFactory.getLogger(getClass());
+
     public CsvTelemetryReader(InputStream csvStream) {
         super(csvStream);
     }
 
     @Override
     public Iterable<Telemetry> read() {
+        _logger.debug("Reading telemetries from CSV file.");
         Iterable<String[]> lines = parseCsv(true);
         LinkedList<Telemetry> vessels = new LinkedList<>();
         lines.forEach(line -> vessels.add(toTelemetry(line)));
+        _logger.debug("Done reading telemetries from CSV file.");
         return vessels;
     }
 

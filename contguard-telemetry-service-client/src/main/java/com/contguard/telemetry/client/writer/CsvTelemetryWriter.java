@@ -2,11 +2,14 @@ package com.contguard.telemetry.client.writer;
 
 import com.contguard.telemetry.client.writer.api.ITelemetryWriter;
 import com.contguard.telemetry.contract.Telemetry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class CsvTelemetryWriter extends CsvWriterBase implements ITelemetryWriter {
+    private final Logger _logger = LoggerFactory.getLogger(getClass());
     private final String _caption = "Received,Last location,Reason,Speed (kph),Mileage (km),Heading,GPS,Installed,Button,Door,Main power,Light,Temperature,Address,Longitude,Latitude,Altitude (m),Name,Vessel (MMSI)";
     private final File _outputFile;
 
@@ -17,7 +20,9 @@ public class CsvTelemetryWriter extends CsvWriterBase implements ITelemetryWrite
 
     @Override
     public void write(Iterable<Telemetry> telemetries) {
+        _logger.debug("writing telemetries");
         if(_outputFile.exists()) {
+            _logger.debug("deleting old output file");
             _outputFile.delete();
         }
         try {
@@ -27,13 +32,14 @@ public class CsvTelemetryWriter extends CsvWriterBase implements ITelemetryWrite
                 try {
                     writeLine(toCsv(telemetry));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    _logger.error("caught exception", e);
                 }
             });
             close();
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            _logger.error("caught exception", ioe);
         }
+        _logger.debug("writing telemetries done.");
     }
 
     private String toCsv(Telemetry telemetry) {

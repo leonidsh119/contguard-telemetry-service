@@ -23,6 +23,7 @@ public class TelemetryController extends BaseController {
 
     @PutMapping
     MatchVesselResponse matchVessel(@RequestBody MatchVesselRequest request) {
+        _logger.debug("Matching telemetry to vessel {}", request.getVessel().getVesselMmsi());
         return _service.match(request);
     }
 }
