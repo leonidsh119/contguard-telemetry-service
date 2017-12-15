@@ -38,6 +38,11 @@ POST http://<base-url>:8080/telemetry/telemetries
 PUT http://<base-url>:8080/telemetry/telemetries
 ````
 
+4. Delete all telemetries:
+````
+DELETE http://<base-url>:8080/telemetry/telemetries
+````
+
 ## 4. Build
 Build the project using Maven. Run the following command from the project root directory: 
 ````

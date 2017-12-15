@@ -22,7 +22,7 @@ public class TelemetryTest {
     @LocalServerPort
     private int _randomServerPort;
     private ITelemetrySdk _sdk;
-    private final DateTimeFormatter _formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm:ss a");
+    private final DateTimeFormatter _formatter = DateTimeFormatter.ofPattern("M/d/yyyy HH:mm:ss a");
 
     @PostConstruct
     private void initSdk() {

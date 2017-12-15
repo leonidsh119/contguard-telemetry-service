@@ -26,4 +26,10 @@ public class TelemetryController extends BaseController {
         _logger.debug("Matching telemetry to vessel {}", request.getVessel().getVesselMmsi());
         return _service.match(request);
     }
+
+    @DeleteMapping
+    void deleteAllTelemetries() {
+        _logger.debug("Delete all telemetries");
+        _service.delete();
+    }
 }

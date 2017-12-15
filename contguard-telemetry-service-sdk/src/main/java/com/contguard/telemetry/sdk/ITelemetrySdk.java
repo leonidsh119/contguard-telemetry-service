@@ -6,4 +6,5 @@ public interface ITelemetrySdk {
     AddTelemetryResponse addTelemetry(AddTelemetryRequest request);
     MatchVesselResponse matchVessel(MatchVesselRequest matchVesselRequest);
     boolean healthCheck();
+    boolean deleteAllTelemetries();
 }

@@ -14,7 +14,7 @@ abstract class CsvReaderBase {
     private final Logger _logger = LoggerFactory.getLogger(getClass());
     private final Pattern _pattern = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
     private final InputStream _csvStream;
-    private final DateTimeFormatter _formatter = DateTimeFormatter.ofPattern("d/M/yyyy H:m");
+    private final DateTimeFormatter _formatter = DateTimeFormatter.ofPattern("M/d/yyyy H:m");
 
     CsvReaderBase(InputStream csvStream) {
         _csvStream = csvStream;

@@ -33,6 +33,8 @@ public class ClientApplication {
         InputStream telemetriesStream = ClientApplication.class.getClassLoader().getResourceAsStream("telemetries.csv");
         ITelemetryReader telemetriesStreamReader = new CsvTelemetryReader(telemetriesStream);
         Iterable<Telemetry> telemetries = telemetriesStreamReader.read();
+        _logger.info("Deleting all old telemetries from Server.");
+        sdk.deleteAllTelemetries();
         _logger.info("Sending telemetries to Server.");
         telemetries.forEach(telemetry -> sdk.addTelemetry(new AddTelemetryRequest(telemetry)));
     }

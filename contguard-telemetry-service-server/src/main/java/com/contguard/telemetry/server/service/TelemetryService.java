@@ -50,6 +50,14 @@ public class TelemetryService implements ITelemetryService {
         return response;
     }
 
+    @Override
+    @Transactional
+    public void delete() {
+        _logger.debug("Deleting all telemetries.");
+        _telemetryDal.deleteAll();
+        _logger.debug("All telemetries deleted.");
+    }
+
     private TelemetryDto toDto(Telemetry telemetry) {
         TelemetryDto telemetryDto = new TelemetryDto();
         telemetryDto.setReceived(telemetry.getReceived());

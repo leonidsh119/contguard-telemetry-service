@@ -40,6 +40,13 @@ public class TelemetrySdk implements ITelemetrySdk {
         return responseEntity.getStatusCode().equals(HttpStatus.OK);
     }
 
+    @Override
+    public boolean deleteAllTelemetries() {
+        String url = MessageFormat.format("{0}/telemetries", _apiEndpoint);
+        ResponseEntity<Void> responseEntity = sendRequest(url, HttpMethod.DELETE, new HttpEntity(new HttpHeaders()), Void.class);
+        return responseEntity.getStatusCode().equals(HttpStatus.OK);
+    }
+
     private <T> ResponseEntity<T> sendRequest(String url, HttpMethod method, Class<T> responseType) {
         return this.sendRequest(url, method, (HttpEntity)null, responseType);
     }

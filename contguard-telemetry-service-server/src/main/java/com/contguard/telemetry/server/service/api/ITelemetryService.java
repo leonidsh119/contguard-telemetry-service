@@ -5,4 +5,5 @@ import com.contguard.telemetry.contract.*;
 public interface ITelemetryService {
     AddTelemetryResponse add(AddTelemetryRequest addTelemetryRequest);
     MatchVesselResponse match(MatchVesselRequest request);
+    void delete();
 }
