@@ -2,6 +2,7 @@ package com.contguard.telemetry.server.service;
 
 import com.contguard.telemetry.server.dal.ITelemetryDal;
 import com.contguard.telemetry.server.model.TelemetryDto;
+import com.contguard.telemetry.server.service.api.ITelemetryMatcher;
 import com.contguard.telemetry.server.service.api.ITelemetryService;
 import com.contguard.telemetry.contract.*;
 import org.slf4j.Logger;
@@ -11,9 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Service
 public class TelemetryService implements ITelemetryService {
     private final Logger _logger = LoggerFactory.getLogger(getClass());
@@ -21,11 +19,11 @@ public class TelemetryService implements ITelemetryService {
     @Value("${match.gps-validity}")
     private String _gpsValidity;
 
-    @Value("${match.range-minutes}")
-    private int _matchRangeMinutes;
-
     @Autowired
     private ITelemetryDal _telemetryDal;
+
+    @Autowired
+    private ITelemetryMatcher _matcher;
 
     @Override
     @Transactional
@@ -40,13 +38,11 @@ public class TelemetryService implements ITelemetryService {
     @Override
     @Transactional
     public MatchVesselResponse match(MatchVesselRequest request) {
-        _logger.debug("Matching vessel {}.", request.getVessel().getVesselMmsi());
-        Vessel vessel = request.getVessel();
-        LocalDateTime start = vessel.getTime().minusMinutes(_matchRangeMinutes);
-        LocalDateTime end = vessel.getTime().plusMinutes(_matchRangeMinutes);
-        List<TelemetryDto> matchingTelemetries = _telemetryDal.findByIsValidForMatchAndLongitudeAndLatitudeAndReceivedBetween(true, vessel.getLongitude(), vessel.getLatitude(), start, end);
+        int vesselMmsi = request.getVessel().getVesselMmsi();
+        _logger.debug("Matching vessel {}.", vesselMmsi);
+        Iterable<TelemetryDto> matchingTelemetries = _matcher.match(request.getVessel());
         MatchVesselResponse response = new MatchVesselResponse();
-        matchingTelemetries.forEach(telemetryDto -> response.add(toContract(telemetryDto, vessel.getVesselMmsi())));
+        matchingTelemetries.forEach(telemetryDto -> response.add(toContract(telemetryDto, vesselMmsi)));
         return response;
     }
 

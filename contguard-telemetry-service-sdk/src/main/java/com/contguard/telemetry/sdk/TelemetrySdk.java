@@ -36,8 +36,12 @@ public class TelemetrySdk implements ITelemetrySdk {
     @Override
     public boolean healthCheck() {
         String url = MessageFormat.format("{0}/healthcheck", _apiEndpoint);
-        ResponseEntity<Void> responseEntity = sendRequest(url, HttpMethod.GET, new HttpEntity(new HttpHeaders()), Void.class);
-        return responseEntity.getStatusCode().equals(HttpStatus.OK);
+        try {
+            ResponseEntity<Void> responseEntity = sendRequest(url, HttpMethod.GET, new HttpEntity(new HttpHeaders()), Void.class);
+            return responseEntity.getStatusCode().equals(HttpStatus.OK);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

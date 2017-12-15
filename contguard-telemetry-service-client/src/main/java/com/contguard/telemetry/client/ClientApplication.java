@@ -22,6 +22,12 @@ public class ClientApplication {
     public static void main(String[] args) {
         _logger.info("Starting Client application.");
         ITelemetrySdk sdk = new TelemetrySdk("localhost", 8080);
+        _logger.info("Checking if Server is healthy.");
+        if(!sdk.healthCheck()) {
+            _logger.error("Server healthcheck failed! Please verify if the server is running.");
+            return;
+        }
+        _logger.info("Server healthcheck OK.");
         sendTelemetries(sdk);
         Iterable<Telemetry> matchingTelemetries = matchVessels(sdk);
         writeToFile(matchingTelemetries);
