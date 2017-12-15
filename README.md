@@ -69,4 +69,4 @@ sudo java -jar contguard-telemetry-client-server-0.0.1-SNAPSHOT.jar
     1. The client application will send telemetries from a **_resource_** CSV file
     2. The client application will match telemetries to vessels from a **_resource_** CSV file.
     3. The client application will store the matching telemetries to **_matchedTelemetries.csv_** file in the running directory.
-3. Both server and client application stores logs under \var\log\contguard\ folder.
+3. Both server and client application stores logs under \var\log\contguard\telemetry\ folder.
