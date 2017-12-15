@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>contguard-telemetry-service-sdk</artifactId>
+    <packaging>jar</packaging>
+    <name>Telemetry Service SDK</name>
+    <description>A Java SDK for the Telemetry Service</description>
+
+    <parent>
+        <groupId>com.contguard.telemetry</groupId>
+        <artifactId>contguard-telemetry-service</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>contguard-telemetry-service-contract</artifactId>
+        </dependency>
+
+        <!--Spring boot dependencies-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.4</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
